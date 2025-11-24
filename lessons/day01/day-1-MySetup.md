@@ -1,4 +1,4 @@
-Day 1: Terraform Installation & Setup Guide
+# Day 1: Terraform Installation & Setup Guide
 
 Objective: Install the Terraform CLI and prepare the local development environment for Infrastructure as Code (IaC).
 
