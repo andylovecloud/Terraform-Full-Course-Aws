@@ -1,0 +1,17 @@
+    1  cd lessons/day02/
+    2  tf init
+    3  ls 
+    4  terraform init
+    5  tf plan
+    6  alias tf=terraform
+    7  tf plan
+    8  aws configure
+    9  cleart
+   10  clear
+   11  aws configure
+   12  tf plan
+   13  aws configure
+   14  tf plan
+   15  aws configure
+   16  tf plan
+   17  history > history.txt
