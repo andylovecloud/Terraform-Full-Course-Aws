@@ -12,7 +12,7 @@
 # count is useful when you want to create multiple identical resources
 # Access individual instances using count.index
 
-resource "aws_s3_bucket" "example_count" {
+resource "aws_s3_bucket" "bucket1" {
   count = length(var.s3_bucket_names)
 
   bucket = var.s3_bucket_names[count.index]

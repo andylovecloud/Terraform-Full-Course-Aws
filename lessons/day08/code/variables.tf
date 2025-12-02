@@ -1,79 +1,122 @@
 # String type
 variable "environment" {
-  type        = string
-  description = "The environment type"
-  default     = "staging"
+    type = string
+    description = "the environment type"
+    default = "dev"
 }
 
-variable "aws_region" {
-  type        = string
-  description = "AWS region for resources"
-  default     = "ca-central-1"
+variable "region" {
+    type = string
+    description = "the aws region"
+    default = "eu-north-1"
+}
+
+variable "instance_type" {
+    type = string
+    description = "the ec2 instance type"
+    default = "t2.micro"
 }
 
 # Number type
 variable "instance_count" {
-  type        = number
-  description = "Number of EC2 instances to create"
-  default     = 2
+    type = number
+    description = "the number of ec2 instances to create"
+    default = 1
+}
+
+variable "storage_size" {
+    type = number
+    description = "the storage size for ec2 instance in GB"
+    default = 8
 }
 
 # Bool type
-variable "enable_versioning" {
-  type        = bool
-  description = "Enable versioning for S3 buckets"
-  default     = true
+variable "enable_monitoring" {
+    type = bool
+    description = "enable detailed monitoring for ec2 instances"
+    default = false
 }
 
-# List type
+variable "associate_public_ip" {
+    type = bool
+    description = "associate public ip to ec2 instance"
+    default = true
+}
+
+# List type - IMPORTANT: Allows duplicates, maintains order
+variable "allowed_cidr_blocks" {
+    type = list(string)
+    description = "list of allowed cidr blocks for security group"
+    default = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
+    # Access: var.allowed_cidr_blocks[0] = "10.0.0.0/8"
+    # Can have duplicates: ["10.0.0.0/8", "10.0.0.0/8"] is valid
+}
+
+variable "allowed_instance_types" {
+    type = list(string)
+    description = "list of allowed ec2 instance types"
+    default = ["t2.micro", "t2.small", "t3.micro"]
+    # Order matters: index 0 = t2.micro, index 1 = t2.small
+}
+
+# Map type - IMPORTANT: Key-value pairs, keys must be unique
+variable "instance_tags" {
+    type = map(string)
+    description = "tags to apply to the ec2 instances"
+    default = {
+        "Environment" = "dev"
+        "Project" = "terraform-course"
+        "Owner" = "devops-team"
+    }
+    # Access: var.instance_tags["Environment"] = "dev"
+    # Keys are always strings, values must match the declared type
+}
+
+# Set type - IMPORTANT: No duplicates allowed, order doesn't matter
 variable "availability_zones" {
-  type        = list(string)
-  description = "List of availability zones"
-  default     = ["ca-central-1a", "ca-central-1b", "ca-central-1d"]
+    type = set(string)
+    description = "set of availability zones (no duplicates)"
+    default = ["eu-north-1a", "eu-north-1b", "eu-north-1c"]
+    # KEY DIFFERENCE FROM LIST:
+    # - Automatically removes duplicates
+    # - Order is not guaranteed
+    # - Cannot access by index like set[0] - need to convert to list first
 }
 
-variable "s3_bucket_names" {
-  type        = list(string)
-  description = "List of S3 bucket names for count example"
-  default     = ["tf-day08-count-bucket-a-20251016", "tf-day08-count-bucket-b-20251016"]
-}
-
-# Set type - used with for_each
-variable "s3_bucket_set" {
-  type        = set(string)
-  description = "Set of S3 bucket names for for_each example"
-  default     = ["tf-day08-foreach-bucket-a-20251016", "tf-day08-foreach-bucket-b-20251016"]
-}
-
-# Map type
-variable "resource_tags" {
-  type        = map(string)
-  description = "Tags to apply to resources"
-  default = {
-    "environment" = "staging"
-    "managed_by"  = "terraform"
-    "department"  = "devops"
-  }
-}
-
-# Object type
-variable "ec2_config" {
-  type = object({
-    instance_type = string
-    ami_id        = string
-    volume_size   = number
-  })
-  description = "EC2 instance configuration"
-  default = {
-    instance_type = "t2.micro"
-    ami_id        = "ami-0c55b159cbfafe1f0" # Amazon Linux 2 (update for your region)
-    volume_size   = 20
-  }
-}
-
-# Tuple type
+# Tuple type - IMPORTANT: Fixed length, each position has specific type
 variable "network_config" {
-  type        = tuple([string, string, number])
-  description = "Network configuration (VPC CIDR, Subnet CIDR, subnet count)"
-  default     = ["10.0.0.0/16", "10.0.1.0/24", 3]
+    type = tuple([string, string, number])
+    description = "Network configuration (VPC CIDR, subnet CIDR, port number)"
+    default = ["10.0.0.0/16", "10.0.1.0/24", 80]
+    # CRITICAL RULES:
+    # - Position 0 must be string (VPC CIDR)
+    # - Position 1 must be string (subnet CIDR)  
+    # - Position 2 must be number (port)
+    # - Cannot add/remove elements - length is fixed
+    # Access: var.network_config[0], var.network_config[1], var.network_config[2]
 }
+
+# Object type - IMPORTANT: Named attributes with specific types
+variable "server_config" {
+    type = object({
+        name = string
+        instance_type = string
+        monitoring = bool
+        storage_gb = number
+        backup_enabled = bool
+    })
+    description = "Complete server configuration object"
+    default = {
+        name = "web-server"
+        instance_type = "t2.micro"
+        monitoring = true
+        storage_gb = 20
+        backup_enabled = false
+    }
+    # KEY BENEFITS:
+    # - Self-documenting structure
+    # - Type safety for each attribute
+    # - Access: var.server_config.name, var.server_config.monitoring
+    # - All attributes must be provided (unless optional)
+}
+
