@@ -3,7 +3,7 @@
 # EC2 Instance - Demonstrating all type constraints
 resource "aws_instance" "web_server" {
   # String type: AMI ID and instance type
-  ami           = "ami-0e8459476fed2e23b"
+  ami           = "ami-0478dea86455fb5ee"
   instance_type = var.instance_type
   
   # Number type: Instance count

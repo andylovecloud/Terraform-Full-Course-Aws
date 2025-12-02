@@ -8,7 +8,7 @@ variable "environment" {
 variable "region" {
     type = string
     description = "the aws region"
-    default = "us-east-1"
+    default = "eu-north-1"
 }
 
 variable "instance_type" {
@@ -76,7 +76,7 @@ variable "instance_tags" {
 variable "availability_zones" {
     type = set(string)
     description = "set of availability zones (no duplicates)"
-    default = ["us-east-1a", "us-east-1b", "us-east-1c"]
+    default = ["eu-north-1a", "eu-north-1b", "eu-north-1c"]
     # KEY DIFFERENCE FROM LIST:
     # - Automatically removes duplicates
     # - Order is not guaranteed
