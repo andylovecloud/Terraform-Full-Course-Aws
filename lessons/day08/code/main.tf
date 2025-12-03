@@ -14,7 +14,6 @@
 
 resource "aws_s3_bucket" "bucket1" {
   count = length(var.s3_bucket_names)
-
   bucket = var.s3_bucket_names[count.index]
 
   tags = {
