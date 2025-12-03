@@ -15,7 +15,7 @@ terraform {
     key = "day09/lifecycle-demo/terraform.tfstate"
     
     # AWS region where the bucket exists
-    region = "us-east-1"
+    region = "eu-north-1"
     
     # DynamoDB table for state locking
     dynamodb_table = "terraform-state-lock"

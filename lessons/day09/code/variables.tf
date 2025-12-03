@@ -5,7 +5,7 @@
 variable "aws_region" {
   description = "AWS region for resources"
   type        = string
-  default     = "us-east-1"
+  default     = "eu-north-1"
 }
 
 variable "environment" {
@@ -27,7 +27,7 @@ variable "bucket_names" {
 variable "allowed_regions" {
   description = "List of allowed AWS regions"
   type        = list(string)
-  default     = ["us-east-1", "us-west-2", "eu-west-1", "ap-south-1"]
+  default     = ["eu-north-1", "eu-north-2", "eu-west-1", "eu-west-2"]
 }
 
 # ==============================
