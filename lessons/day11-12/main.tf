@@ -13,29 +13,29 @@
 # Uncomment to test
 # ==============================================================================
 
-# locals {
-#   # Transform "Project ALPHA Resource" to "project-alpha-resource"
-#   formatted_project_name = lower(replace(var.project_name, " ", "-"))
-# }
+locals {
+  # Transform "Project ALPHA Resource" to "project-alpha-resource"
+  formatted_project_name = lower(replace(var.project_name, " ", "-"))
+}
 
-# resource "aws_resourcegroups_group" "project" {
-#   name = local.formatted_project_name
+resource "aws_resourcegroups_group" "project" {
+  name = local.formatted_project_name
 
-#   resource_query {
-#     query = jsonencode({
-#       ResourceTypeFilters = ["AWS::AllSupported"]
-#       TagFilters = [{
-#         Key    = "Project"
-#         Values = [local.formatted_project_name]
-#       }]
-#     })
-#   }
+  resource_query {
+    query = jsonencode({
+      ResourceTypeFilters = ["AWS::AllSupported"]
+      TagFilters = [{
+        Key    = "Project"
+        Values = [local.formatted_project_name]
+      }]
+    })
+  }
 
-#   tags = {
-#     Name    = local.formatted_project_name
-#     Project = local.formatted_project_name
-#   }
-# }
+  tags = {
+    Name    = local.formatted_project_name
+    Project = local.formatted_project_name
+  }
+}
 
 # ==============================================================================
 # ASSIGNMENT 2: Resource Tagging
@@ -44,16 +44,16 @@
 # Uncomment to test
 # ==============================================================================
 
-# locals {
-#   # Merge default tags with environment-specific tags
-#   merged_tags = merge(var.default_tags, var.environment_tags)
-# }
+locals {
+  # Merge default tags with environment-specific tags
+  merged_tags = merge(var.default_tags, var.environment_tags)
+}
 
-# resource "aws_vpc" "tagged_vpc" {
-#   cidr_block = "10.0.0.0/16"
+resource "aws_vpc" "tagged_vpc" {
+  cidr_block = "10.0.0.0/16"
 
-#   tags = local.merged_tags
-# }
+  tags = local.merged_tags
+}
 
 # ==============================================================================
 # ASSIGNMENT 3: S3 Bucket Naming
@@ -62,25 +62,25 @@
 # Uncomment to test
 # ==============================================================================
 
-# locals {
-#   # S3 bucket names: max 63 chars, lowercase, no spaces or special chars
-#   formatted_bucket_name = replace(
-#     replace(
-#       lower(substr(var.bucket_name, 0, 63)),
-#       " ", ""
-#     ),
-#     "!", ""
-#   )
-# }
+locals {
+  # S3 bucket names: max 63 chars, lowercase, no spaces or special chars
+  formatted_bucket_name = replace(
+    replace(
+      lower(substr(var.bucket_name, 0, 63)),
+      " ", ""
+    ),
+    "!", ""
+  )
+}
 
-# resource "aws_s3_bucket" "storage" {
-#   bucket = local.formatted_bucket_name
+resource "aws_s3_bucket" "storage" {
+  bucket = local.formatted_bucket_name
 
-#   tags = {
-#     Name        = local.formatted_bucket_name
-#     Environment = var.environment
-#   }
-# }
+  tags = {
+    Name        = local.formatted_bucket_name
+    Environment = var.environment
+  }
+}
 
 # ==============================================================================
 # ASSIGNMENT 4: Security Group Port Configuration
@@ -89,58 +89,58 @@
 # Uncomment to test
 # ==============================================================================
 
-# locals {
-#   # Split comma-separated ports into list
-#   port_list = split(",", var.allowed_ports)
+locals {
+  # Split comma-separated ports into list
+  port_list = split(",", var.allowed_ports)
 
-#   # Create security group rules data structure
-#   sg_rules = [for port in local.port_list : {
-#     name        = "port-${port}"
-#     port        = port
-#     description = "Allow traffic on port ${port}"
-#   }]
+  # Create security group rules data structure
+  sg_rules = [for port in local.port_list : {
+    name        = "port-${port}"
+    port        = port
+    description = "Allow traffic on port ${port}"
+  }]
 
-#   # Format for documentation: "port-80-port-443-port-8080-port-3306"
-#   formatted_ports = join("-", [for port in local.port_list : "port-${port}"])
-# }
+  # Format for documentation: "port-80-port-443-port-8080-port-3306"
+  formatted_ports = join("-", [for port in local.port_list : "port-${port}"])
+}
 
 # # Create a VPC specifically for this assignment (independent of Assignment 2)
-# resource "aws_vpc" "sg_vpc" {
-#   cidr_block = "10.1.0.0/16"
+resource "aws_vpc" "sg_vpc" {
+  cidr_block = "10.1.0.0/16"
 
-#   tags = {
-#     Name       = "security-group-demo-vpc"
-#     Assignment = "4"
-#   }
-# }
+  tags = {
+    Name       = "security-group-demo-vpc"
+    Assignment = "4"
+  }
+}
 
-# resource "aws_security_group" "app_sg" {
-#   name        = "app-security-group"
-#   description = "Security group with dynamic ports"
-#   vpc_id      = aws_vpc.sg_vpc.id
+resource "aws_security_group" "app_sg" {
+  name        = "app-security-group"
+  description = "Security group with dynamic ports"
+  vpc_id      = aws_vpc.sg_vpc.id
 
-#   dynamic "ingress" {
-#     for_each = { for rule in local.sg_rules : rule.name => rule }
-#     content {
-#       description = ingress.value.description
-#       from_port   = tonumber(ingress.value.port)
-#       to_port     = tonumber(ingress.value.port)
-#       protocol    = "tcp"
-#       cidr_blocks = ["0.0.0.0/0"]
-#     }
-#   }
+  dynamic "ingress" {
+    for_each = { for rule in local.sg_rules : rule.name => rule }
+    content {
+      description = ingress.value.description
+      from_port   = tonumber(ingress.value.port)
+      to_port     = tonumber(ingress.value.port)
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
 
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-#   tags = {
-#     Name = "app-security-group"
-#   }
-# }
+  tags = {
+    Name = "app-security-group"
+  }
+}
 
 # ==============================================================================
 # ASSIGNMENT 5: Environment Configuration Lookup

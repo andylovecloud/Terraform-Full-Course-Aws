@@ -2,75 +2,75 @@
 # ASSIGNMENT 1 OUTPUTS: Project Naming
 # ==============================================================================
 
-# output "formatted_project_name" {
-#   description = "Formatted project name (lowercase with hyphens)"
-#   value       = local.formatted_project_name
-# }
+output "formatted_project_name" {
+  description = "Formatted project name (lowercase with hyphens)"
+  value       = local.formatted_project_name
+}
 
-# output "resource_group_name" {
-#   description = "Created resource group name"
-#   value       = aws_resourcegroups_group.project.name
-# }
+output "resource_group_name" {
+  description = "Created resource group name"
+  value       = aws_resourcegroups_group.project.name
+}
 
 # ==============================================================================
 # ASSIGNMENT 2 OUTPUTS: Resource Tagging
 # ==============================================================================
 # Uncomment when testing Assignment 2
 
-# output "merged_tags" {
-#   description = "Combined default and environment tags"
-#   value       = local.merged_tags
-# }
+output "merged_tags" {
+  description = "Combined default and environment tags"
+  value       = local.merged_tags
+}
 
-# output "vpc_tags" {
-#   description = "Tags applied to VPC"
-#   value       = aws_vpc.tagged_vpc.tags
-# }
+output "vpc_tags" {
+  description = "Tags applied to VPC"
+  value       = aws_vpc.tagged_vpc.tags
+}
 
 # ==============================================================================
 # ASSIGNMENT 3 OUTPUTS: S3 Bucket Naming
 # ==============================================================================
 # Uncomment when testing Assignment 3
 
-# output "original_bucket_name" {
-#   description = "Original bucket name input"
-#   value       = var.bucket_name
-# }
+output "original_bucket_name" {
+  description = "Original bucket name input"
+  value       = var.bucket_name
+}
 
-# output "formatted_bucket_name" {
-#   description = "Formatted S3-compliant bucket name"
-#   value       = local.formatted_bucket_name
-# }
+output "formatted_bucket_name" {
+  description = "Formatted S3-compliant bucket name"
+  value       = local.formatted_bucket_name
+}
 
-# output "bucket_arn" {
-#   description = "ARN of created S3 bucket"
-#   value       = aws_s3_bucket.storage.arn
-# }
+output "bucket_arn" {
+  description = "ARN of created S3 bucket"
+  value       = aws_s3_bucket.storage.arn
+}
 
 # ==============================================================================
 # ASSIGNMENT 4 OUTPUTS: Security Group Ports
 # ==============================================================================
 # Uncomment when testing Assignment 4
 
-# output "port_list" {
-#   description = "List of ports from comma-separated string"
-#   value       = local.port_list
-# }
+output "port_list" {
+  description = "List of ports from comma-separated string"
+  value       = local.port_list
+}
 
-# output "security_group_rules" {
-#   description = "Generated security group rules"
-#   value       = local.sg_rules
-# }
+output "security_group_rules" {
+  description = "Generated security group rules"
+  value       = local.sg_rules
+}
 
-# output "formatted_ports" {
-#   description = "Formatted port string for documentation"
-#   value       = local.formatted_ports
-# }
+output "formatted_ports" {
+  description = "Formatted port string for documentation"
+  value       = local.formatted_ports
+}
 
-# output "security_group_id" {
-#   description = "ID of created security group"
-#   value       = aws_security_group.app_sg.id
-# }
+output "security_group_id" {
+  description = "ID of created security group"
+  value       = aws_security_group.app_sg.id
+}
 
 # ==============================================================================
 # ASSIGNMENT 5 OUTPUTS: Environment Configuration

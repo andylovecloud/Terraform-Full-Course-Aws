@@ -121,13 +121,13 @@ variable "credential" {
 variable "user_locations" {
   type        = list(string)
   description = "User-specified AWS regions"
-  default     = ["us-east-1", "us-west-2", "us-east-1"] # Contains duplicate
+  default     = ["eu-north-1", "eu-north-2", "eu-north-3"] # Contains duplicate
 }
 
 variable "default_locations" {
   type        = list(string)
   description = "Default AWS regions"
-  default     = ["us-west-1"]
+  default     = ["eu-north-1"]
 }
 
 # ==============================================================================
