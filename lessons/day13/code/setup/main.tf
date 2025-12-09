@@ -2,7 +2,7 @@
 # We are creating them here to simulate that environment.
 
 provider "aws" {
-  region = "us-east-1"
+  region = "eu-north-1"
 }
 
 resource "aws_vpc" "shared" {
