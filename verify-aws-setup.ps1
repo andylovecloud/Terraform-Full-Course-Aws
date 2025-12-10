@@ -132,10 +132,11 @@ Write-Host ""
 # Check 5: Test AWS Credentials
 Write-Host "[5/7] Testing AWS credentials with STS GetCallerIdentity..." -ForegroundColor Blue
 $stsFailed = $false
+$stsOutput = ""
 try {
     $stsOutput = aws sts get-caller-identity 2>&1 | Out-String
     if ($LASTEXITCODE -ne 0) {
-        throw "STS call failed"
+        $stsFailed = $true
     }
 } catch {
     $stsFailed = $true
@@ -156,7 +157,7 @@ if ($stsFailed) {
     Write-Host ""
     Write-Host "Next steps:" -ForegroundColor Yellow
     Write-Host "  1. Verify credentials: aws configure"
-    Write-Host "  2. Check for spaces: Write-Host `"[`$env:AWS_SECRET_ACCESS_KEY]`""
+    Write-Host '  2. Check for spaces: Write-Host "[$env:AWS_SECRET_ACCESS_KEY]"'
     Write-Host "  3. Regenerate credentials in AWS IAM Console"
     Write-Host "  4. See TROUBLESHOOTING.md for detailed solutions"
     Write-Host ""

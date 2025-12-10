@@ -34,11 +34,11 @@ lessons/day15/vpc-peering-demo-east.pem
 *.pem
 
 # AWS credential files (extra safety)
-.aws/
-*credentials*
+.aws/credentials
+.aws/config
+aws-credentials*
 *.credential
-*secret*key*
 
 # Terraform debug logs
 terraform-debug.log
-*debug.log
+tf-debug.log

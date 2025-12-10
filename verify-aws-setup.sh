@@ -131,6 +131,7 @@ echo ""
 
 # Check 5: Test AWS Credentials
 echo -e "${BLUE}[5/7] Testing AWS credentials with STS GetCallerIdentity...${NC}"
+STS_FAILED=false
 STS_OUTPUT=$(aws sts get-caller-identity 2>&1) || STS_FAILED=true
 
 if [ "$STS_FAILED" = true ]; then
@@ -148,7 +149,7 @@ if [ "$STS_FAILED" = true ]; then
     echo ""
     echo -e "${YELLOW}Next steps:${NC}"
     echo "  1. Verify credentials: aws configure"
-    echo "  2. Check for spaces: echo \"[\$AWS_SECRET_ACCESS_KEY]\""
+    echo '  2. Check for spaces: echo "[$AWS_SECRET_ACCESS_KEY]"'
     echo "  3. Regenerate credentials in AWS IAM Console"
     echo "  4. See TROUBLESHOOTING.md for detailed solutions"
     echo ""
