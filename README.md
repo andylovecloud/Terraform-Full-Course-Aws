@@ -30,6 +30,15 @@ This course consists of video lessons covering basic to advanced Terraform conce
 - [Deployment Strategies](https://youtu.be/uj0qDN1EWus)
 - [Networking Fundamentals](https://youtu.be/yUhzvVrwkV8)
 - [IP Addressing](https://youtu.be/G1azmL5-eQI)
+
+### 🚀 Getting Started
+
+New to the course? Start here:
+1. **[Quick Start Guide](QUICK_START.md)** - Set up AWS credentials correctly
+2. **[Troubleshooting Guide](TROUBLESHOOTING.md)** - Fix common issues
+3. **Verification Scripts** - Test your setup before starting
+   - Linux/macOS: `bash verify-aws-setup.sh`
+   - Windows: `.\verify-aws-setup.ps1`
   
 </details>
 
