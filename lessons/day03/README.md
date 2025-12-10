@@ -93,10 +93,19 @@ Enter your:
 
 #### Method 2: Environment Variables
 ```bash
+# ✅ IMPORTANT: Always use quotes to handle special characters
 export AWS_ACCESS_KEY_ID="your-access-key"
 export AWS_SECRET_ACCESS_KEY="your-secret-key"
 export AWS_DEFAULT_REGION="us-east-1"
+
+# Note: AWS Secret Keys can contain special characters like +, /, =
+# Always quote them to prevent shell misinterpretation
 ```
+
+**Common Issues:**
+- ⚠️ **Special Characters**: If your secret key contains `+`, `/`, or `=`, always use quotes
+- ⚠️ **Spaces**: Ensure no leading/trailing spaces in credentials
+- ⚠️ **Verify**: Test with `aws sts get-caller-identity` before running Terraform
 
 ### Tasks to Complete
 1. **Get familiar with Terraform AWS documentation**
@@ -140,10 +149,21 @@ terraform destroy
 ```
 
 ### Troubleshooting Tips
+- **Verify Credentials First**: Run `aws sts get-caller-identity` to test credentials
+- **Check for Spaces**: Run `echo "[$AWS_SECRET_ACCESS_KEY]"` to detect hidden spaces
+- **Quote Special Characters**: Always quote credentials containing `+`, `/`, `=`
+- **Use Verification Script**: Run `bash ../../verify-aws-setup.sh` from the lesson directory
 - Check AWS credentials are properly configured
 - Verify region settings match your intended deployment location
 - Ensure S3 bucket names are unique and follow naming conventions
 - Review AWS CloudTrail for API call logs if needed
+
+**Common Error: "SignatureDoesNotMatch"**
+If you see this error, it's usually a credential formatting issue:
+1. Check for spaces: `echo "[$AWS_SECRET_ACCESS_KEY]"`
+2. Ensure quotes are used: `export AWS_SECRET_ACCESS_KEY="your-key-with-special-chars"`
+3. Regenerate credentials if needed
+4. See [TROUBLESHOOTING.md](../../TROUBLESHOOTING.md) for detailed solutions
 
 ## Next Steps
 Proceed to Day 4 to learn about Terraform state file management and remote backends using S3 and DynamoDB.
