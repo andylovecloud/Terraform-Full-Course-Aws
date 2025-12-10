@@ -254,10 +254,28 @@ This course consists of video lessons covering basic to advanced Terraform conce
 3. Implement projects
 4. Practice with provided code samples
 
+## 🔧 Troubleshooting
+
+Encountering issues with AWS credentials or Terraform setup? Check our comprehensive **[Troubleshooting Guide](TROUBLESHOOTING.md)** for solutions to common problems, including:
+
+- ✅ AWS authentication errors (SignatureDoesNotMatch, ExpiredToken, etc.)
+- ✅ Credential configuration issues
+- ✅ STS GetCallerIdentity failures
+- ✅ Terraform AWS provider setup problems
+
+**Quick Credential Verification:**
+```bash
+# Verify AWS credentials are working
+aws sts get-caller-identity
+
+# If this fails, see TROUBLESHOOTING.md for detailed solutions
+```
+
 ## 📝 License
 MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🔗 Resources
 - [Terraform Documentation](https://www.terraform.io/docs)
 - [AWS Documentation](https://docs.aws.amazon.com/)
+- [Troubleshooting Guide](TROUBLESHOOTING.md)
 - [Course Support Forum]()
